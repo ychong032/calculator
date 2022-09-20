@@ -1,0 +1,92 @@
+body {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: lightgray;
+}
+
+#container {
+    flex: 1;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+#calculator {
+    border: 1px solid blue;
+    border-radius: 8px;
+    background-color: rgb(35, 35, 36);
+    height: 500px;
+    padding: 12px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+#header {
+    display: flex;
+    align-items: center;
+    height: 15%;
+    width: 100%;
+    justify-content: center;
+    font-size: 30px;
+    color: rgb(142, 92, 235);
+}
+
+#display {
+    background-color: lightcyan;
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-radius: 8px;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+#operands {
+    font-size: 20px;
+}
+
+#result {
+    font-size: 40px;
+}
+
+#buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    height: 65%;
+}
+
+button {
+    flex: 1 1 16%;
+    border-radius: 8px;
+    background-color: rgb(73, 73, 75);
+    color: white;
+    font-size: 20px;
+}
+
+#delete, #clear {
+    background-color: goldenrod;
+}
+
+#footer {
+    text-align: center;
+    width: 100%;
+    background-color: grey;
+    color: white;
+}
+
+a:visited {
+    color: white;
+}
