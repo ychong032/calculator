@@ -1,17 +1,21 @@
 function add(a, b) {
-    return a + b;
+    return parseFloat((a + b).toFixed(5));
 }
 
 function subtract(a, b) {
-    return a - b;
+    return parseFloat((a - b).toFixed(5));
 }
 
 function multiply(a, b) {
-    return a * b;
+    return parseFloat((a * b).toFixed(5));
 }
 
 function divide(a, b) {
-    return a / b;
+    if (b === 0) {
+        alert("Cannot divide by 0!");
+        return;
+    }
+    return parseFloat((a / b).toFixed(5));
 }
 
 function operate(operator, a, b) {
@@ -30,13 +34,16 @@ function operate(operator, a, b) {
 }
 
 function displayInput(e) {
-    if (displayValue === "0" && !isNaN(parseFloat(e.target.textContent))) {
+    if (displayValue === "0" && !isOperator(e.target.textContent)) {
         displayValue = e.target.textContent;
         currentOperand = displayValue;
+    } else if (displayValue.split(" ")[2] === "0") {
+        displayValue = displayValue.substring(0, displayValue.length - 1) + e.target.textContent;
+        currentOperand = e.target.textContent;
     } else {
-        displayValue = displayValue.concat(e.target.textContent);
-        if (!isNaN(parseFloat(e.target.textContent))) {
-            currentOperand = currentOperand.concat(e.target.textContent);
+        displayValue += e.target.textContent;
+        if (!isOperator(e.target.textContent)) {
+            currentOperand += e.target.textContent;
         }
     }
     result.textContent = displayValue;
@@ -44,38 +51,83 @@ function displayInput(e) {
 
 function clearDisplay() {
     expression.textContent = "";
-    result.textContent = "";
+    result.textContent = "0";
     displayValue = "0";
+    delete operation.a;
+    delete operation.op;
+    delete operation.b;
+    currentOperand = "0";
 }
 
 function inputOperator(e) {
-    operation.a = parseFloat(currentOperand);
-    currentOperand = "";
-    operation.op = e.target.textContent.trim();
-    displayInput(e);
+    if ("a" in operation && "op" in operation) {
+        if (displayValue.charAt(displayValue.length - 1) === " ") {
+            displayValue = `${operation.a}`;
+            operation.op = e.target.textContent.trim();
+        } else {
+            let intermediateResult = operate(operation.op, operation.a, parseFloat(currentOperand));
+            if (intermediateResult === undefined) {
+                return;
+            }
+            operation.a = intermediateResult;
+            operation.op = e.target.textContent.trim();
+            currentOperand = "0";
+            expression.textContent = `Ans = ${intermediateResult}`;
+            displayValue = `${intermediateResult}`;
+        }
+        displayInput(e);
+    } else {
+        operation.a = parseFloat(currentOperand);
+        operation.op = e.target.textContent.trim();
+        currentOperand = "0";
+        displayInput(e);
+    }
 }
 
 function computeResult(e) {
+    if (currentOperand === "0") {
+        return;
+    } else if (operation.op === undefined) {
+        expression.textContent = `Ans = ${currentOperand}`;
+        return;
+    }
     let computed = operate(operation.op, operation.a, parseFloat(currentOperand));
+    if (computed === undefined) {
+        return;
+    }
     displayInput(e);
     expression.textContent = displayValue;
     displayValue = computed.toString();
     currentOperand = displayValue;
     result.textContent = displayValue;
+    delete operation.a;
+    delete operation.op;
+    delete operation.b;
+}
+
+function isOperator(char) {
+    return isNaN(parseFloat(char));
+}
+
+function inputDecimal(e) {
+    
 }
 
 let displayValue = "0";
-let currentOperand = "";
-let operations = [];
+let currentOperand = "0";
 let operation = {};
+let lastComputed = "";
 const result = document.querySelector("#result");
 const expression = document.querySelector("#expression");
 const operandButtons = document.querySelectorAll("button.operand");
 const operatorButtons = document.querySelectorAll("button.operator")
 const clearButton = document.querySelector("#clear");
 const equalButton = document.querySelector("#equal");
+const ansButton = document.querySelector("#ans");
+const decimalButton = document.querySelector("#decimal");
 
 operandButtons.forEach(item => item.addEventListener("click", displayInput));
 operatorButtons.forEach(item => item.addEventListener("click", inputOperator));
 clearButton.addEventListener("click", clearDisplay);
 equalButton.addEventListener("click", computeResult);
+decimalButton.addEventListener("click", inputDecimal);

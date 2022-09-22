@@ -51,6 +51,7 @@ body {
     border-radius: 8px;
     padding: 8px;
     box-sizing: border-box;
+    text-overflow: clip;
 }
 
 #operands {
@@ -59,6 +60,8 @@ body {
 
 #result {
     font-size: 40px;
+    text-overflow: clip;
+    overflow: hidden;
 }
 
 #buttons {
