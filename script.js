@@ -18,8 +18,22 @@ function divide(a, b) {
     return parseFloat((a / b).toFixed(5));
 }
 
+function convertOperatorSymbol(symbol) {
+    switch (symbol) {
+        case "+":
+            return "+";
+        case "-":
+            return "-";
+        case "\u00d7":
+            return "*";
+        case "\u00f7":
+            return "/";
+    }
+}
+
 function operate(operator, a, b) {
-    switch (operator) {
+    let symbol = convertOperatorSymbol(operator);
+    switch (symbol) {
         case "+":
             return add(a, b);
         case "-":
