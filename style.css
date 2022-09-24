@@ -17,7 +17,6 @@ body {
 }
 
 #calculator {
-    border: 1px solid blue;
     border-radius: 8px;
     background-color: rgb(35, 35, 36);
     height: 500px;

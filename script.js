@@ -197,9 +197,9 @@ operandButtons.forEach(item => item.addEventListener("click", displayInput));
 operatorButtons.forEach(item => item.addEventListener("click", inputOperator));
 clearButton.addEventListener("click", clearDisplay);
 equalButton.addEventListener("click", computeResult);
-// TODO: implement negate feature
-// TODO: improve aesthetic
-// TODO: add visual effects when pressing equal
 decimalButton.addEventListener("click", inputDecimal);
 deleteButton.addEventListener("click", backspace);
 window.addEventListener("keydown", keyboardInput);
+
+// TODO: implement negate feature
+// TODO: implement animation when pressing equal
