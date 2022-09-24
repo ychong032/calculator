@@ -198,7 +198,6 @@ operatorButtons.forEach(item => item.addEventListener("click", inputOperator));
 clearButton.addEventListener("click", clearDisplay);
 equalButton.addEventListener("click", computeResult);
 // TODO: implement negate feature
-// TODO: change operator symbols
 // TODO: improve aesthetic
 // TODO: add visual effects when pressing equal
 decimalButton.addEventListener("click", inputDecimal);

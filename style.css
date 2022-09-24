@@ -58,6 +58,10 @@ body {
     font-size: 20px;
 }
 
+#operator, #equal {
+    background-color: slategray;
+}
+
 #result {
     font-size: 40px;
     text-overflow: clip;
