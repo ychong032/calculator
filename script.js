@@ -54,14 +54,12 @@ function clearDisplay() {
     result.textContent = "0";
     displayValue = "0";
     currentOperand = "0";
-    delete operation.a;
-    delete operation.op;
-    delete operation.b;
+    clearOperation();
 }
 
 function inputOperator(e) {
     if ("a" in operation && "op" in operation) {
-        if (displayValue.charAt(displayValue.length - 1) === " ") {
+        if (displayValue.slice(-1) === " ") {
             displayValue = `${operation.a}`;
             operation.op = e.target.textContent.trim();
         } else {
@@ -85,7 +83,7 @@ function inputOperator(e) {
 }
 
 function computeResult(e) {
-    if (currentOperand === "0") {
+    if (currentOperand === "0" || currentOperand === "-") {
         return;
     } else if (operation.op === undefined) {
         expression.textContent = `Ans = ${currentOperand}`;
@@ -100,9 +98,7 @@ function computeResult(e) {
     displayValue = computed.toString();
     currentOperand = displayValue;
     result.textContent = displayValue;
-    delete operation.a;
-    delete operation.op;
-    delete operation.b;
+    clearOperation();
 }
 
 function isOperator(char) {
@@ -117,6 +113,31 @@ function inputDecimal() {
     }
 }
 
+function backspace() {
+    let lastChar = displayValue.slice(-1)
+    if (lastChar === " ") {
+        displayValue = displayValue.slice(0, -3);
+        currentOperand = displayValue;
+        clearOperation();
+    } else {
+        displayValue = displayValue.slice(0, -1);
+        currentOperand = currentOperand.slice(0, -1);
+    }
+
+    if (displayValue.length === 0) {
+        displayValue = "0";
+        currentOperand = "0";
+    }
+
+    result.textContent = displayValue;
+}
+
+function clearOperation() {
+    delete operation.a;
+    delete operation.op;
+    delete operation.b;
+}
+
 let displayValue = "0";
 let currentOperand = "0";
 let operation = {};
@@ -129,16 +150,16 @@ const clearButton = document.querySelector("#clear");
 const equalButton = document.querySelector("#equal");
 const ansButton = document.querySelector("#ans");
 const decimalButton = document.querySelector("#decimal");
+const deleteButton = document.querySelector("#delete");
 
 operandButtons.forEach(item => item.addEventListener("click", displayInput));
 operatorButtons.forEach(item => item.addEventListener("click", inputOperator));
 clearButton.addEventListener("click", clearDisplay);
 equalButton.addEventListener("click", computeResult);
-// TODO: implement decimal feature
-// TODO: implement backspace feature
 // TODO: implement Ans feature
 // TODO: implement keyboard support
 // TODO: implement negate feature
 // TODO: change operator symbols
 // TODO: improve aesthetic
 decimalButton.addEventListener("click", inputDecimal);
+deleteButton.addEventListener("click", backspace)
