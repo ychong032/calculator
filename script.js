@@ -53,10 +53,10 @@ function clearDisplay() {
     expression.textContent = "";
     result.textContent = "0";
     displayValue = "0";
+    currentOperand = "0";
     delete operation.a;
     delete operation.op;
     delete operation.b;
-    currentOperand = "0";
 }
 
 function inputOperator(e) {
@@ -109,8 +109,12 @@ function isOperator(char) {
     return isNaN(parseFloat(char));
 }
 
-function inputDecimal(e) {
-    
+function inputDecimal() {
+    if (!currentOperand.includes(".")) {
+        displayValue += ".";
+        currentOperand += ".";
+        result.textContent = displayValue;
+    }
 }
 
 let displayValue = "0";
@@ -130,4 +134,11 @@ operandButtons.forEach(item => item.addEventListener("click", displayInput));
 operatorButtons.forEach(item => item.addEventListener("click", inputOperator));
 clearButton.addEventListener("click", clearDisplay);
 equalButton.addEventListener("click", computeResult);
+// TODO: implement decimal feature
+// TODO: implement backspace feature
+// TODO: implement Ans feature
+// TODO: implement keyboard support
+// TODO: implement negate feature
+// TODO: change operator symbols
+// TODO: improve aesthetic
 decimalButton.addEventListener("click", inputDecimal);
